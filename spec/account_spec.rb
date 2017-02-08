@@ -2,6 +2,10 @@ require './lib/account'
 
 describe Account do
 
+  let(:person) {instance_double('person', name: 'Johan')}
+
+  subject { described_class.new({owner: person}) }
+
 
  it 'is expect ping to be 4 digit number' do
    number_length = Math.log10(subject.pin_code).to_i + 1
@@ -24,5 +28,9 @@ describe Account do
  it 'deactivates account using Instance method' do
    subject.deactivate
    expect(subject.account_status).to eq :deactivated
+ end
+
+ it 'is expect to have an owner' do
+   expect(subject.owner).to eq person
  end
 end
