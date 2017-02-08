@@ -11,4 +11,7 @@ describe Account do
    expected_date = Date.today.next_year(5).strftime("%m/%y")
    expect(subject.set_expire_date).to eq expected_date
   end
+ it 'is expect to have a balance of 0 on initialize' do
+   expect(subject.balance).to eq 0
+ end
 end
