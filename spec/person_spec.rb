@@ -37,4 +37,5 @@ describe Person do
      expect(subject.account.owner).to be subject
    end
  end
-end
+
+ end
