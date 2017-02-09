@@ -15,6 +15,6 @@ describe Person do
  end
 
  it 'is expected to raise error if no name is set' do
-   expect { described_class.new }.to raise_error 'A name is required'
+   expect { described_class.new }.to raise_error 'A name is required' 
  end
 end
