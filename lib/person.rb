@@ -1,6 +1,8 @@
 class Person
 
-  attr_accessor :name, :cash, :account
+  attr_accessor :name,
+                :cash,
+                :account
 
   def initialize(attrs = {})
     @name = set_name(attrs[:name])
@@ -10,7 +12,11 @@ class Person
   end
 
   def set_name(name)
-  name == nil ? missing_name : name
+   name == nil ? missing_name : name
+  end
+
+  def create_account
+  @account = Account.new(owner: self)
   end
 
   private
@@ -18,6 +24,5 @@ class Person
 
   def missing_name
     raise ArgumentError, 'A name is required'
-
   end
 end
