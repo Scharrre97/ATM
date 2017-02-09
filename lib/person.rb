@@ -23,15 +23,19 @@ class Person
   @account == nil ? missing_account : deposit_funds(amount)
   end
 
+
   private
 
   def missing_name
     raise ArgumentError, 'A name is required'
   end
 
+  def missing_account
+     raise RuntimeError, 'No account present'
+  end
+
   def deposit_funds(amount)
      @cash -= amount
      @account.balance += amount
-
   end
 end
