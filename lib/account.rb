@@ -1,10 +1,14 @@
+require 'date'
+
 class Account
 
-  attr_accessor :pin_code,
-                :exp_date,
-                :balance,
+  attr_accessor :balance,
                 :account_status,
                 :owner
+
+  attr_reader  :pin_code,
+               :exp_date
+
 
   STANDARD_VALIDITY_YRS = 5
 
@@ -13,11 +17,11 @@ class Account
     @exp_date = set_expire_date
     @balance = attrs[:balance] || 0
     @account_status = :active
-    set_owner(attrs[:owner])
+    @owner = set_owner(attrs[:owner])
   end
 
   def self.deactivate(account)
-     account.account_status = :deactivated     
+     account.account_status = :deactivated
   end
 
   def deactivate
@@ -35,7 +39,7 @@ class Account
   end
 
   def set_owner(obj)
-    obj == nil ? missing_owner : @owner = obj
+    obj == nil? ? missing_owner : obj
   end
 
   def missing_owner

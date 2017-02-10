@@ -27,6 +27,14 @@ class Person
      @account == nil ? missing_account : withdraw_funds(args)
   end
 
+  def gimme_moneyz(moneyz)
+     increase_cash(moneyz)
+  end
+
+  def steal_moneyz(greens)
+     @cash = @cash - greens
+  end
+
 
   private
 
@@ -39,7 +47,7 @@ class Person
   end
 
   def missing_atm
-     raise RuntimeError, 'An ATM is required'     
+     raise RuntimeError, 'An ATM is required'
   end
 
   def increase_cash(amount)
@@ -57,6 +65,6 @@ class Person
      amount = args[:amount]
      pin = args[:pin]
      response = atm.withdraw(amount, pin, account, atm)
-     response[:status] == true ? increase_cash(amount) : response
+     response[:status] ? increase_cash(amount) : response
   end
 end
