@@ -11,9 +11,13 @@ class Account
   def initialize(attrs = {})
     @pin_code = generate_pin
     @exp_date = set_expire_date
-    @balance = 0
+    @balance = attrs[:balance] || 0
     @account_status = :active
     set_owner(attrs[:owner])
+  end
+
+  def self.deactivate(account)
+     account.account_status = :deactivated     
   end
 
   def deactivate

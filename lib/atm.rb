@@ -6,18 +6,17 @@ class Atm
   end
 
   def withdraw(amount, pin_code, account, account_status )
-
   case
   when insufficient_funds_in_account?(amount, account)
-     { status: true, message: 'insufficient funds', date: Date.today }
+     return_error_message('insufficient funds')
   when insufficient_funds_in_atm?(amount)
-     { status: false, message: 'insufficient funds in ATM', date: Date.today }
+     return_error_message('insufficient funds in ATM')
   when incorrect_pin?(pin_code, account.pin_code)
-     { status: false, message: 'wrong pin', date: Date.today }
+     return_error_message('wrong pin')
   when card_expired?(account.exp_date)
-     { status: false, message: 'card expired', date: Date.today }
+     return_error_message('card expired')
   when account_stat?(account_status)
-     { status: :disabled, message: 'disabled account', date: Date.today}
+     return_error_message('disabled account')
      else
     perform_transaction(amount, account)
   end
@@ -25,6 +24,12 @@ end
 
 
   private
+
+  def return_error_message(message)
+    { status: false,
+      message: message,
+      date: Date.today }
+  end
 
   def insufficient_funds_in_account?(amount, account)
     amount > account.balance
@@ -46,7 +51,7 @@ end
       Date.strptime(exp_date, '%m/%y') < Date.today
   end
   def account_stat?(account_status)
-    account_status === :disabled
+    account_status === :false
   end
   def perform_transaction(amount, account)
     @funds -= amount

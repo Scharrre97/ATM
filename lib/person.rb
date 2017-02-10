@@ -16,11 +16,15 @@ class Person
   end
 
   def create_account
-  @account = Account.new(owner: self)
+     @account = Account.new(owner: self)
   end
 
   def deposit(amount)
-  @account == nil ? missing_account : deposit_funds(amount)
+     @account == nil ? missing_account : deposit_funds(amount)
+  end
+
+  def withdraw(args = {})
+     @account == nil ? missing_account : withdraw_funds(args)
   end
 
 
@@ -34,8 +38,25 @@ class Person
      raise RuntimeError, 'No account present'
   end
 
+  def missing_atm
+     raise RuntimeError, 'An ATM is required'     
+  end
+
+  def increase_cash(amount)
+     @cash += amount
+  end
+
   def deposit_funds(amount)
      @cash -= amount
      @account.balance += amount
+  end
+
+  def withdraw_funds(args)
+     args[:atm] == nil ? missing_atm : atm = args[:atm]
+     account = @account
+     amount = args[:amount]
+     pin = args[:pin]
+     response = atm.withdraw(amount, pin, account, atm)
+     response[:status] == true ? increase_cash(amount) : response
   end
 end
